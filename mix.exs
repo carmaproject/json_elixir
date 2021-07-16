@@ -34,7 +34,7 @@ defmodule JsonElixir.MixProject do
       name: "ex_json",
       maintainers: "hassanRSiddiqi",
       organization: "carmaproject",
-      licenses: ["MIT License"],
+      licenses: ["MIT License"]
     ]
   end
 

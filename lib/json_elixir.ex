@@ -1,8 +1,7 @@
 defmodule JsonElixir do
-
   alias JsonElixir.Process
 
-   @moduledoc ~S"""
+  @moduledoc ~S"""
     JSON Elixir is tool to convert json into HTML
   """
 
@@ -21,5 +20,4 @@ defmodule JsonElixir do
     {:ok, "<table><tr><td></td><td>%{</td></tr><tr><td></td><td></td><td>a:</td><td>1,</td></tr><tr><td></td><td>}%</td></tr></table>"}
   """
   defdelegate to_html(json), to: Process
-
 end
