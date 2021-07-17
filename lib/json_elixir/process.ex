@@ -2,24 +2,18 @@ defmodule JsonElixir.Process do
 
   @invalid_input "expected list or bit string got: "
 
-  def to_html!(json) when
-  is_list(json) or
-  is_bitstring(json) do
+  def to_html!(json) when is_list(json) or is_bitstring(json) do
     case JSON.decode(json) do
       {:ok, json} ->
         process(json)
-      {:error, error} ->
+      {:error, _error} ->
         raise ArgumentError, @invalid_input <> inspect json
     end
   end
 
   def to_html!(json), do: raise ArgumentError, @invalid_input <> inspect json
 
-  def to_html(json) when
-  is_list(json) or
-  is_bitstring(json)
-  do
-
+  def to_html(json) when is_list(json) or is_bitstring(json) do
     case JSON.decode(json) do
       {:ok, json} ->
         {:ok, process(json)}
@@ -31,9 +25,9 @@ defmodule JsonElixir.Process do
   def to_html(json), do: {:error, @invalid_input <> inspect json}
 
   defp process(json) do
-    html = parse_json(json)
+    str = ["<table>", parse_json(json), "</table>")] |> IO.chardata_to_string()
 
-    String.replace(~s(<table>#{html}</table>"), ~r/[\x{200B}\x{200C}\x{200D}\x{FEFF}\\\r\n\\"]/u, "")
+    String.replace(str, ~r/[\x{200B}\x{200C}\x{200D}\x{FEFF}\\\r\n\\"]/u, "")
   end
 
   defp parse_json(value) when is_nil(value), do: []
@@ -51,19 +45,18 @@ defmodule JsonElixir.Process do
   defp parse_json(value) when is_list(value) do
       value = Enum.map(value, fn v ->
         html = parse_json(v)
-        ~s(<tr><td></td>#{html}<td></td></tr>)
+        ["<tr><td></td>", html, "<td></td></tr>"] |> IO.chardata_to_string()
       end)
 
-      ~s(<tr><td></td><td>[</td></tr>#{value}<tr><td></td><td>]</td></tr>)
+      ["<tr><td></td><td>[</td></tr>", value, "<tr><td></td><td>]</td></tr>"] |> IO.chardata_to_string()
   end
 
   defp parse_json(value) do
     value = Enum.map(value, fn {k, v} ->
-      html = parse_json(v)
-      ~s(<tr><td></td><td></td><td>#{k}:</td><td>#{html}</td></tr>)
+      ["<tr><td></td><td></td><td>", k, ":</td><td>", parse_json(v), "</td></tr>"] |> IO.chardata_to_string()
     end)
 
-    ~s(<tr><td></td><td>%{</td></tr>#{value}<tr><td></td><td>}%</td></tr>)
+    ["<tr><td></td><td>%{</td></tr>", value, "<tr><td></td><td>}%</td></tr>"] |> IO.chardata_to_string()
   end
 
 
@@ -75,7 +68,7 @@ defmodule JsonElixir.Process do
   end
 
   defp decorate_with_span(value) when is_nil(value), do: nil
-  defp decorate_with_span(value) when is_list(value) and length(value) == 0, do: ~s([],)
+  defp decorate_with_span(value) when value == [], do: ~s([],)
   defp decorate_with_span(value), do: ~s(#{value},)
 
 end

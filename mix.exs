@@ -4,8 +4,8 @@ defmodule JsonElixir.MixProject do
   def project do
     [
       app: :json_elixir,
-      version: "0.1.0",
-      elixir: "~> 1.11",
+      version: "0.1.1",
+     # elixir: "~> 1.11",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       description: description(),
@@ -31,7 +31,7 @@ defmodule JsonElixir.MixProject do
 
   def package do
     [
-      name: "ex_json",
+      # name: "ex_json",
       maintainers: "hassanRSiddiqi",
       organization: "carmaproject",
       licenses: ["MIT License"],
@@ -39,6 +39,6 @@ defmodule JsonElixir.MixProject do
   end
 
   defp description() do
-    "convert raw json into html."
+    "Convert raw json into html."
   end
 end

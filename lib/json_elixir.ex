@@ -2,8 +2,8 @@ defmodule JsonElixir do
 
   alias JsonElixir.Process
 
-   @moduledoc ~S"""
-    JSON Elixir is tool to convert json into HTML
+  @moduledoc ~S"""
+  JSON Elixir is tool to convert json into HTML
   """
 
   @doc """
