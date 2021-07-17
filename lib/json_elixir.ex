@@ -3,12 +3,19 @@ defmodule JsonElixir do
   alias JsonElixir.Process
 
   @moduledoc ~S"""
-  JSON Elixir is tool to convert json into HTML
+  JSON Elixir is tool to convert json into HTML.
   """
 
   @doc """
-  Hello world.
+  Returns a HTML string from JSON string
+  ## Examples
+    iex> JsonElixir.to_html!(~s({"a": 1}))
+    "<table><tr><td></td><td>%{</td></tr><tr><td></td><td></td><td>a:</td><td>1,</td></tr><tr><td></td><td>}%</td></tr></table>"
+  """
+  defdelegate to_html!(json), to: Process
 
+  @doc """
+  Returns a HTML string from JSON string
   ## Examples
 
       iex> JsonElixir.hello()
