@@ -17,12 +17,9 @@ defmodule JsonElixir do
   @doc """
   Returns a HTML string from JSON string
   ## Examples
-
-      iex> JsonElixir.hello()
-      :world
-
+    iex> JsonElixir.to_html(~s({"a": 1}))
+    {:ok, "<table><tr><td></td><td>%{</td></tr><tr><td></td><td></td><td>a:</td><td>1,</td></tr><tr><td></td><td>}%</td></tr></table>"}
   """
-  def hello do
-    :world
-  end
+  defdelegate to_html(json), to: Process
+
 end
