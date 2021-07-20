@@ -10,7 +10,7 @@ by adding `json_elixir` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:json_elixir, "~> 0.1.0"}
+    {:json_elixir, github: "carmaproject/json_elixir"},
   ]
 end
 ```
