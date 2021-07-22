@@ -11,6 +11,7 @@ defmodule JsonElixir.Process do
     end
   end
 
+  def to_html!(json) when is_map(json), do: process(json)
   def to_html!(json), do: raise ArgumentError, @invalid_input <> inspect json
 
   def to_html(json) when is_list(json) or is_bitstring(json) do
@@ -22,10 +23,11 @@ defmodule JsonElixir.Process do
     end
   end
 
+  def to_html(json) when is_map(json), do: {:ok, process(json)}
   def to_html(json), do: {:error, @invalid_input <> inspect json}
 
   defp process(json) do
-    str = ["<table>", parse_json(json), "</table>")] |> IO.chardata_to_string()
+    str = ["<table>", parse_json(json), "</table>"] |> IO.chardata_to_string()
 
     String.replace(str, ~r/[\x{200B}\x{200C}\x{200D}\x{FEFF}\\\r\n\\"]/u, "")
   end
